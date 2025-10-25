@@ -23,6 +23,8 @@ def _fwd_set_block_table_and_num_seq_alloc_blocks_kernel(
         tl.store(block_table + my_seq_id * max_blocks_per_seq + my_num_allocated_blocks + i, my_block_id)
     tl.store(num_seq_allocated_blocks + my_seq_id, my_num_allocated_blocks + my_block_needed)
 
+
+# 宿主端 (host-side) 封装函数，即它在 CPU 端准备好数据并启动 Triton GPU kernel 去执行真正的工作。
 def set_block_table_and_num_seq_alloc_blocks(
     num_seq_allocated_blocks: torch.Tensor, # [max_seqs_in_block_table]
     block_table: torch.Tensor,        # [max_seqs_in_block_table, max_blocks_per_seq]
